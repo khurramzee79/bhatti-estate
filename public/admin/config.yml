@@ -1,0 +1,46 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+site_url: "https://bhattiestate.com"
+display_url: "https://bhattiestate.com"
+logo_url: "https://bhattiestate.com/assets/BhattiEstate.png"
+
+collections:
+  - name: "listings"
+    label: "Properties"
+    folder: "content/listings"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Status", name: "status", widget: "select", options: ["Available", "Sold", "Rented"]}
+      - {label: "Category", name: "category", widget: "select", options: ["Sale", "Rent"]}
+      - {label: "Price (PKR)", name: "price", widget: "number"}
+      - {label: "Location", name: "location", widget: "select", options: ["Malir Cantt", "Askari IV", "Askari V", "Askari VI", "Other"]}
+      - {label: "Full Address", name: "address", widget: "string"}
+      - {label: "Bedrooms", name: "bedrooms", widget: "number"}
+      - {label: "Bathrooms", name: "bathrooms", widget: "number"}
+      - {label: "Size (Sq Ft)", name: "size", widget: "number"}
+      - {label: "Featured Image", name: "image", widget: "image"}
+      - {label: "Gallery", name: "gallery", widget: "list", field: {label: "Image", name: "image", widget: "image"}}
+      - {label: "Description", name: "body", widget: "markdown"}
+      - {label: "Features List", name: "features", widget: "list", field: {label: "Feature", name: "item", widget: "string"}}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+
+  - name: "blog"
+    label: "Blog"
+    folder: "content/blog"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Author", name: "author", widget: "string", default: "Bhatti Estate"}
+      - {label: "Cover Image", name: "cover_image", widget: "image"}
+      - {label: "Excerpt", name: "excerpt", widget: "text"}
+      - {label: "Tags", name: "tags", widget: "list", field: {label: "Tag", name: "tag", widget: "string"}}
+      - {label: "Body", name: "body", widget: "markdown"}
