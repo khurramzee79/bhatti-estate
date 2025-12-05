@@ -5,7 +5,14 @@ import { Phone, Mail } from 'lucide-react';
 
 export default function ListingPage({ listing, content }) {
   if (!listing) return null;
-
+// FIX: Use optional chaining or conditional logic for price formatting
+  const formattedPrice = listing.price 
+    ? new Intl.NumberFormat('en-PK', {
+        style: 'currency',
+        currency: 'PKR',
+        maximumSignificantDigits: 3
+      }).format(listing.price)
+    : 'Price Upon Request';
   return (
     <Layout title={listing.title}>
       <div className="max-w-7xl mx-auto px-4 py-12">
@@ -20,7 +27,7 @@ export default function ListingPage({ listing, content }) {
             <div className="bg-white p-6 rounded-lg shadow-sm mb-8">
               <h3 className="text-xl font-bold mb-4 border-b pb-2">Property Details</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                <div><span className="font-bold block">Price</span> PKR {listing.price.toLocaleString()}</div>
+                <div><span className="font-bold block">Price</span> {formattedPrice}</div>
                 <div><span className="font-bold block">Type</span> {listing.category}</div>
                 <div><span className="font-bold block">Beds</span> {listing.bedrooms}</div>
                 <div><span className="font-bold block">Baths</span> {listing.bathrooms}</div>
