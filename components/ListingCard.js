@@ -4,12 +4,14 @@ import { MapPin, Bed, Bath, Maximize } from 'lucide-react';
 export default function ListingCard({ listing }) {
   const { title, slug, price, location, bedrooms, bathrooms, size, image, category } = listing;
 
-  // Format price to PKR
-  const formattedPrice = new Intl.NumberFormat('en-PK', {
-    style: 'currency',
-    currency: 'PKR',
-    maximumSignificantDigits: 3
-  }).format(price);
+  // FIX: Check if price exists before formatting
+  const formattedPrice = price 
+    ? new Intl.NumberFormat('en-PK', {
+        style: 'currency',
+        currency: 'PKR',
+        maximumSignificantDigits: 3
+      }).format(price)
+    : 'Price Upon Request'; // Default fallback text
 
   return (
     <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100">
