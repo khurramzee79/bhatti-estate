@@ -4,14 +4,27 @@ import ListingCard from '../../components/ListingCard';
 import { getContent } from '../../lib/api';
 
 export default function Listings({ listings }) {
-  const [filter, setFilter] = useState({ location: 'All', category: 'All' });
-  const [search, setSearch] = useState('');
+  // ... (useState declarations for filters and search)
 
-  const filtered = listings.filter(l => {
-    const matchesLoc = filter.location === 'All' || l.location === filter.location;
-    const matchesCat = filter.category === 'All' || l.category === filter.category;
-    const matchesSearch = l.title.toLowerCase().includes(search.toLowerCase());
-    return matchesLoc && matchesCat && matchesSearch;
+  // FIX: Add safety checks here to ensure properties exist before calling toLowerCase()
+  const filteredListings = listings.filter((listing) => {
+    // 1. Check Search Term (title or description)
+    const matchesSearch = listing.title.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    // 2. Check Location Filter (Must exist AND match, or filter is set to 'All')
+    const matchesLocation = 
+      selectedLocation === 'All' || 
+      (listing.location && listing.location.toLowerCase() === selectedLocation.toLowerCase());
+    
+    // 3. Check Category Filter (Must exist AND match, or filter is set to 'All')
+    const matchesCategory = 
+      selectedCategory === 'All' || 
+      (listing.category && listing.category.toLowerCase() === selectedCategory.toLowerCase());
+    
+    // 4. Check Bedrooms Filter (Must match or filter is set to 0)
+    const matchesBedrooms = selectedBedrooms === 0 || listing.bedrooms >= selectedBedrooms;
+
+    return matchesSearch && matchesLocation && matchesCategory && matchesBedrooms;
   });
 
   return (
